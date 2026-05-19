@@ -4,7 +4,7 @@ conexao = mysql.connector.connect(
     host= 'localhost',
     user='root',
     password='root',
-    database='bd_teste'
+    database='dbtaskquest'
 )
 
 cursor = conexao.cursor()
@@ -32,9 +32,9 @@ def cadastraPessoa(nome, idade):
     conexao.commit()
     buscaPessoas()
 
-# nome = input("Digite o nome da pessoa que deseja cadastrar: ")
-# idade = int(input("Digite a idade da pessoa: "))
-# cadastraPessoa(nome, idade)
+nome = input("Digite o nome da pessoa que deseja cadastrar: ")
+idade = int(input("Digite a idade da pessoa: "))
+cadastraPessoa(nome, idade)
 
 def atualizaNomePessoa(id, nome):
     sql = f'UPDATE tbl_pessoas SET nome_pessoa = "{nome}" WHERE id_pessoa = {id}'
@@ -57,7 +57,7 @@ def deletaPessoa(id):
 # id = int(input("Digite o id da pessoa que deseja excluir: "))
 # deletaPessoa(id)
 
-buscaPessoas()
+# buscaPessoas()
 
 conexao.close()
 cursor.close()
