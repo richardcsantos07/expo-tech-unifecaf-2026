@@ -1,5 +1,5 @@
 from conexao import conectar, fechar_conexao;
 
-def perfil_usuario():
+def menu_recompensa():
 
     return
