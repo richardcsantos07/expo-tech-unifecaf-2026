@@ -13,12 +13,19 @@ def menu_login():
     while True:
         print("\n========== TaskQuest ==========")
         print("1 - Login")
+        print("2 - Cadastre-se")
         print("0 - Sair")
 
         opcao = input("Escolha uma opcao: ").strip()
 
         if opcao == "1":
             
+            idUsuario = login.formularioLogin()
+            menu_principal(idUsuario)
+
+        if opcao == "2":
+            
+            login.formularioCadastro()
             idUsuario = login.formularioLogin()
             menu_principal(idUsuario)
         

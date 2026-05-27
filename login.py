@@ -1,4 +1,5 @@
 from conexao import conectar, fechar_conexao;
+from datetime import datetime;
 
 def loginUsuario(email, senha):
     conexao = conectar()
@@ -22,8 +23,44 @@ def formularioLogin():
 
     usuario = loginUsuario(email, senha)
     
-    print(f'Bem vindo! {usuario[0]}')
 
     return usuario[1]
 
+def cadastroUsuario(nome, email, senha, dataNasc, telefone):
+    conexao = conectar()
+
+    if conexao:
+        cursor = conexao.cursor()
+        sql = f"INSERT INTO usuarios(nome_usuario, data_nasc, telefone) VALUES ('{nome}', '{dataNasc}', '{telefone}')"
+        cursor.execute(sql)
+        conexao.commit()
+
+        sqlUsuario = f"SELECT * FROM usuarios ORDER BY id_usuario DESC LIMIT 1"
+        cursor.execute(sqlUsuario)
+        usuario = cursor.fetchone()
+
+        sql = f"INSERT INTO login(email, senha, id_usuario) VALUES ('{email}', '{senha}', '{usuario[0]}')"
+        cursor.execute(sql)
+        conexao.commit()
+
+        cursor.close()
+        fechar_conexao(conexao)
+
+        return usuario[0]
+
+
+
+
+def formularioCadastro():
+    nome = input("Digite seu nome: ")
+    email = input("Digite seu email: ")
+    telefone = input("Digite seu telefone: ")
+    dataNasc = input("Digite sua data de nascimento: ")
+    dataConvertida = datetime.strptime(dataNasc, "%Y-%m-%d").date()
+    senha = input("Digite sua senha: ")
+    
+    usuario = cadastroUsuario(nome, email, senha, dataConvertida, telefone)
+   
+    return usuario
+    
 

@@ -31,7 +31,7 @@ def menu_tarefas(usuario):
 
         elif opcao == "4":
 
-            concluirTarefa()
+            formConcluirTarefa(usuario)
 
         elif opcao == "5":
 
@@ -181,11 +181,6 @@ def formAtualizarTarefa(usuario):
 
     atualizarTarefa(usuario, tarefa, estado)
 
-    
-
-def concluirTarefa():
-
-    return
 
 def excluirTarefa(usuario, tarefa):
     conexao = conectar()
@@ -206,6 +201,36 @@ def formExcluirTarefa(usuario):
     tarefa = int(input("Escolha a tarefa que deseja excluir: "))
 
     excluirTarefa(usuario, tarefa)
+
+def concluirTarefa(usuario, tarefa):
+    conexao = conectar()
+
+    if conexao:
+        cursor = conexao.cursor()
+        sqlConcluir = f"UPDATE tarefas SET concluida = TRUE WHERE id_tarefa = {tarefa}"
+        cursor.execute(sqlConcluir)
+        conexao.commit()
+
+        sqlConsulta = f"SELECT xp_recompensa, coins_recompensa FROM tarefas WHERE id_tarefa = {tarefa}"
+        cursor.execute(sqlConsulta)
+
+        recompensas = cursor.fetchone()
+
+        sqlRecompensa = f"UPDATE usuarios SET xp_total = {recompensas[0]}, coins_total = {recompensas[1]} WHERE id_usuario = {usuario}"
+        cursor.execute(sqlRecompensa)
+        conexao.commit()
+
+        print(f"Tarefa concluída! A recompensa em Coins e Xp foi atribuída ao usuário")
+
+        buscarTarefas(usuario)
+
+
+
+def formConcluirTarefa(usuario):
+    print("\n========== Concluir Tarefa ==========")
+    tarefa = int(input("Qual tarefa deseja concluir: "))
+
+    concluirTarefa(usuario, tarefa)
     
 
 
