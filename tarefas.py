@@ -23,11 +23,11 @@ def menu_tarefas(usuario):
 
         elif opcao == "2":
 
-            cadastrarTarefa(usuario)
+            formCadastrarTarefa(usuario)
 
         elif opcao == "3":
 
-            atualizarTarefa()
+            formAtualizarTarefa(usuario)
 
         elif opcao == "4":
 
@@ -35,7 +35,7 @@ def menu_tarefas(usuario):
 
         elif opcao == "5":
 
-            excluirTarefa()
+            formExcluirTarefa(usuario)
 
         elif opcao == "0":
 
@@ -58,22 +58,49 @@ def buscarTarefas(usuario):
                """
         cursor.execute(sql)
 
-        tipos = cursor.fetchall()
+        tarefas = cursor.fetchall()
 
-        if not tipos:
+        if not tarefas:
 
             print("Você não possui tarefas cadastradas. Cadastre seu primeira tarefa!")
             formCadastrarTarefa(usuario)
 
         else:
             print("\n========== Tarefas ==========")
-            for tipo in tipos:
-                print(f"ID: {tipo[0]} | Descrição: {tipo[1]}")
+            for tarefa in tarefas:
+                print(f"ID: {tarefa[0]} | NOME: {tarefa[1]} | DATA_FIM: {tarefa[2]} | XP: {tarefa[3]} | DONE: {tarefa[4]} | TIPO: {tarefa[5]} | STATUS: {tarefa[6]}")
 
             cursor.close
             fechar_conexao(conexao)
 
-def cadastrarTarefa(usuario, nome, descricao, dataInicio, dataFim, xp, coins, tipo, estado):
+def buscarTarefa(tarefa):
+    conexao = conectar()
+
+    if conexao:
+        cursor = conexao.cursor()
+        sql = f""" SELECT t.id_tarefa, t.nome_tarefa, t.data_fim, t.xp_recompensa, t.concluida, ti.descricao_tipo, s.descricao_status 
+        FROM tarefas t
+        INNER JOIN tipos ti ON ti.id_tipo = t.id_tipo
+        INNER JOIN status s ON s.id_status = t.id_status 
+        WHERE t.id_tarefa = {tarefa}
+               """
+        cursor.execute(sql)
+
+        tarefas = cursor.fetchone()
+
+        if not tarefas:
+
+            print("Tarefa não encontrada!")
+
+        else:
+            print("\n========== Tarefa ==========")
+            
+            print(f"ID: {tarefas[0]} | NOME: {tarefas[1]} | DATA_FIM: {tarefas[2]} | XP: {tarefas[3]} | DONE: {tarefas[4]} | TIPO: {tarefas[5]} | STATUS: {tarefas[6]}")
+
+            cursor.close
+            fechar_conexao(conexao)
+
+def cadastrarTarefa(nome, descricao, dataInicio, dataFim, xp, coins, tipo, estado, usuario):
     conexao = conectar()
 
     if conexao:
@@ -132,17 +159,53 @@ def formCadastrarTarefa(usuario):
 
     
 
-def atualizarTarefa():
+def atualizarTarefa(usuario, tarefa, status):
+    conexao = conectar()
 
-    return
+    if conexao:
+        cursor = conexao.cursor()
+        sql = f"UPDATE tarefas SET id_status = {status} WHERE id_tarefa = {tarefa}"
+        cursor.execute(sql)
+        conexao.commit()
+
+        cursor.close()
+        fechar_conexao(conexao)
+
+        buscarTarefa(tarefa)
+
+def formAtualizarTarefa(usuario):
+    print("\n========== Formulário de Atualização ==========")
+    tarefa = int(input("Escolha a tarefa que deseja atualizar: "))
+    status.buscarStatus(usuario)
+    estado = int(input("Escolha o status da tarefa: "))
+
+    atualizarTarefa(usuario, tarefa, estado)
+
+    
 
 def concluirTarefa():
 
     return
 
-def excluirTarefa():
+def excluirTarefa(usuario, tarefa):
+    conexao = conectar()
 
-    return
+    if conexao:
+        cursor = conexao.cursor()
+        sql = f"DELETE FROM tarefas WHERE id_tarefa = {tarefa}"
+        cursor.execute(sql)
+        conexao.commit()
+
+        cursor.close()
+        fechar_conexao(conexao)
+
+        buscarTarefas(usuario)
+
+def formExcluirTarefa(usuario):
+    print("\n========== Formulário de Exclusão ==========")
+    tarefa = int(input("Escolha a tarefa que deseja excluir: "))
+
+    excluirTarefa(usuario, tarefa)
     
 
 
