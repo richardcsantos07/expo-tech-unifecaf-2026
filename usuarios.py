@@ -1,4 +1,5 @@
 from conexao import conectar, fechar_conexao;
+import niveis
 
 def perfil_usuario(usuario):
     conexao = conectar()
@@ -16,3 +17,4 @@ def perfil_usuario(usuario):
         print(f"TELEFONE: {usuario[3]}")
         print(f"XP: {usuario[5]}")
         print(f"COINS: {usuario[6]}")
+        print(f"NÍVEL: {usuario[7]}")

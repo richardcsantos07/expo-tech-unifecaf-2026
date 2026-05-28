@@ -31,8 +31,8 @@ def formularioLogin():
 
     if email == "admin@admin.com" and senha == "admin123":
         return None
-    else
-    usuario = loginUsuario(email, senha)
+    else:
+        usuario = loginUsuario(email, senha)
     
 
     return usuario[1]
@@ -70,9 +70,15 @@ def formularioCadastro():
     dataNasc = input("Digite sua data de nascimento: ")
     dataConvertida = datetime.strptime(dataNasc, "%Y-%m-%d").date()
     senha = input("Digite sua senha: ")
+
     
     usuario = cadastroUsuario(nome, email, senha, dataConvertida, telefone)
    
     return usuario
     
 
+def validarTelefone(telefone):
+    if not re.match(r'^\(?\d{2}\)?[\s-]?\d{4,5}-?\d{4}$', telefone):
+        print("Telefone inválido! Use o formato: (11) 99999-9999")
+        return False
+    return True
