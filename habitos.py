@@ -12,7 +12,6 @@ def menu_habitos(usuario):
         print("Menu de Hábitos:")
         print("1 - Ver Hábitos")
         print("2 - Cadastrar Hábito")
-        print("3 - Atualizar Hábito")
         print("0 - Voltar")
 
         opcao = input("Digite qual opção do menu deseja acessar: ")
@@ -23,8 +22,8 @@ def menu_habitos(usuario):
         elif opcao == "2":
             formCadastrarHabito(usuario)
 
-        elif opcao == "3":
-            atualizarHabito()
+        # elif opcao == "3":
+        #     atualizarHabito()
 
         elif opcao == "0":
             break

@@ -43,10 +43,9 @@ def menu_principal(usuario):
         print("\n========== Home ==========")
         print("Deseja navegar para qual menu?")
         print("1 - Tarefas")
-        print("2 - Consquistas")
-        print("3 - Recompensas")
-        print("4 - Hábitos")
-        print("5 - Perfil")
+        print("2 - Recompensas")
+        print("3 - Hábitos")
+        print("4 - Perfil")
         print("0 - Voltar")
 
         opcao = input("Escolha uma opção: ").strip()
@@ -55,19 +54,19 @@ def menu_principal(usuario):
             
             tarefas.menu_tarefas(usuario)
 
+        # elif opcao == "2":
+
+        #     conquistas.menu_conquistas(usuario)
+
         elif opcao == "2":
-
-            conquistas.menu_conquistas(usuario)
-
-        elif opcao == "3":
 
             recompensas.menu_recompensa(usuario)
 
-        elif opcao == "4":
+        elif opcao == "3":
 
             habitos.menu_habitos(usuario)
 
-        elif opcao == "5":
+        elif opcao == "4":
 
             usuarios.perfil_usuario(usuario)
 

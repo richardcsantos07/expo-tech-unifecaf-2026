@@ -9,7 +9,7 @@ def cadastrarSequencia(usuario):
         cursor.execute(sql)
         conexao.commit()
 
-        cursor.close
+        cursor.close()
         fechar_conexao(conexao)
 
 def atualizarSequencia(usuario):
@@ -34,4 +34,10 @@ def buscarSequencia(usuario):
         
         sequencia = cursor.fetchone()
 
-        return sequencia
+        cursor.close()
+        fechar_conexao(conexao)
+
+        if sequencia:
+            return sequencia[0]
+        
+        return None

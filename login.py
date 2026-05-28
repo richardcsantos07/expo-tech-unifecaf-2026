@@ -1,5 +1,6 @@
 from conexao import conectar, fechar_conexao;
 from datetime import datetime;
+import sequencias
 
 def loginUsuario(email, senha):
     conexao = conectar()
@@ -11,6 +12,13 @@ def loginUsuario(email, senha):
         cursor.execute(sql)
 
         usuario = cursor.fetchone()
+
+        sequencia = sequencias.buscarSequencia(usuario[1])
+
+        if not sequencia:
+            sequencias.cadastrarSequencia(usuario[1])
+        else:
+            sequencias.atualizarSequencia(usuario[1])
         
         cursor.close()
         fechar_conexao(conexao)
@@ -21,6 +29,9 @@ def formularioLogin():
     email = input("Digite seu email: ")
     senha = input("Digite sua senha: ")
 
+    if email == "admin@admin.com" and senha == "admin123":
+        return None
+    else
     usuario = loginUsuario(email, senha)
     
 
@@ -28,6 +39,7 @@ def formularioLogin():
 
 def cadastroUsuario(nome, email, senha, dataNasc, telefone):
     conexao = conectar()
+
 
     if conexao:
         cursor = conexao.cursor()
