@@ -31,11 +31,9 @@ def formularioLogin():
 
     if email == "admin@admin.com" and senha == "admin123":
         return None
-    else
-    usuario = loginUsuario(email, senha)
-    
-
-    return usuario[1]
+    else: 
+        usuario = loginUsuario(email, senha)
+        return usuario[1]
 
 def cadastroUsuario(nome, email, senha, dataNasc, telefone):
     conexao = conectar()
